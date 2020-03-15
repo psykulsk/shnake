@@ -150,7 +150,7 @@ draw_game_area_boundaries()
 	screen[0,0]=$CORNER_ICON
 	screen[0,$cols]=$CORNER_ICON
 	screen[$rows,$cols]=$CORNER_ICON
-	screen[0,0]=$CORNER_ICON
+	screen[$rows,0]=$CORNER_ICON
 }
 
 print_screen ()
