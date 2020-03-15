@@ -240,7 +240,6 @@ check_win_cond () {
 
 game ()
 {
-	check_win_cond
 	clear_snake
 	local head_x=${snakebod_x[0]}
 	local head_y=${snakebod_y[0]}
@@ -264,6 +263,7 @@ game ()
 		snakebod_x=($new_head_x ${snakebod_x[@]:0:${#snakebod_x[@]}})
 		snakebod_y=($new_head_y ${snakebod_y[@]:0:${#snakebod_y[@]}})
 		draw_snake
+		check_win_cond
 		set_food
 	else
 		snakebod_x=($new_head_x ${snakebod_x[@]:0:${#snakebod_x[@]}-1})
