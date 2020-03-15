@@ -10,5 +10,7 @@ usage: shnake.sh [-c cols ] [-h rows] [-s speed]
   -s speed specify snake speed. Value from 1-10.
 ```
 
+Requires `bash --version` >= 4.0.
+
 ![](demo.gif)
 
