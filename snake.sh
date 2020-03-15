@@ -250,7 +250,7 @@ game ()
 	local snake_length=${#snakebod_x[@]}
 
 	# check if new head positions is not inside snake
-	for ((i=0;i<snake_length;i++));
+	for ((i=0;i<snake_length-1;i++));
 	do
 		if [[ ${snakebod_y[i]} -eq $new_head_y ]] && [[ ${snakebod_x[i]} -eq $new_head_x ]]; then
 			echo Snake ate itself. You lose!
