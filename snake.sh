@@ -16,10 +16,10 @@ REFRESH_TIME=$X_TIME
 declare -A screen
 
 # array with snakebody x coordinates
-declare -a snakebod_x=( $((cols/2)) )
+declare -a snakebod_x
 
 # array with snakebody y coordinates
-declare -a snakebod_y=( $((rows/2)) )
+declare -a snakebod_y
 
 # initial snake velocity
 declare -i vel_x=1
@@ -303,6 +303,8 @@ trap tick ALRM
 
 parse_args "$@"
 # initialize game area
+snakebod_x=( $((cols/2)) )
+snakebod_y=( $((rows/2)) )
 clear_game_area_screen
 set_food
 # start game
