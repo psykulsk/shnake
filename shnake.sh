@@ -108,6 +108,14 @@ set_speed ()
 		X_TIME=0.04
 		Y_TIME=0.08
 		;;
+		9)
+		X_TIME=0.02
+		Y_TIME=0.04
+		;;
+		10)
+		X_TIME=0.01
+		Y_TIME=0.02
+		;;
 		*)
 		usage
 		;;
@@ -118,15 +126,16 @@ set_speed ()
 usage ()
 {
     echo "usage: $0 [-c cols ] [-h rows] [-s speed]"
-    echo "  -h      display help"
-    echo "  -c cols specify game area cols (best gameplay when < 30)"
-    echo "  -r rows specify game area rows (best gameplay when < 30)"
-    echo "  -s speed specify snake speed. Value from 1-8"
+    echo "  -h display help"
+    echo "  -c cols specify game area cols. Make sure it's not higher then the actual terminal's width. "
+    echo "  -r rows specify game area rows. Make sure it's not higher then the actual terminal's height."
+    echo "  -s speed specify snake speed. Value from 1-10."
     exit 1
 }
 
 clear_game_area_screen ()
 {
+	clear
 	for ((i=1;i<rows;i++)); do
 		for ((j=1;j<cols;j++)); do
 			screen[$i,$j]=$EMPTY
@@ -203,6 +212,7 @@ set_food ()
 		screen_val=${screen[$food_y,$food_x]}
 		if [[ $screen_val == $EMPTY ]]; then
 			screen[$food_y,$food_x]=$FOOD_ICON
+			set_pixel "$food_y" "$food_x" "$FOOD_ICON"
 			return
 		fi
 	done
@@ -233,6 +243,7 @@ calc_new_snake_head_y () {
 check_win_cond () {
 	local max_snake_length=$(( (rows-1)*(cols-1) ))
 	if [[ ${#snakebod_x[@]} -eq $max_snake_length ]]; then
+		set_cursor_below_game
 		echo You won! Congratulations!
 		exit 0
 	fi
@@ -253,6 +264,7 @@ game ()
 	for ((i=0;i<snake_length-1;i++));
 	do
 		if [[ ${snakebod_y[i]} -eq $new_head_y ]] && [[ ${snakebod_x[i]} -eq $new_head_x ]]; then
+			set_cursor_below_game
 			echo Snake ate itself. You lose!
 			exit 0
 		fi
@@ -279,6 +291,7 @@ clear_snake ()
 	do
 		screen[${snakebod_y[i]},${snakebod_x[i]}]=$EMPTY
 	done
+	set_pixel "${snakebod_y[snake_length-1]}" "${snakebod_x[snake_length-1]}" "$EMPTY"
 }
 
 draw_snake ()
@@ -288,16 +301,27 @@ draw_snake ()
 	do
 		screen[${snakebod_y[i]},${snakebod_x[i]}]=$SNAKE_ICON	
 	done
+	set_pixel "${snakebod_y[0]}" "${snakebod_x[0]}" "$SNAKE_ICON"
+}
+
+set_pixel ()
+{
+	tput cup "$1" "$2"
+	printf "%s" "$3"
+}
+
+set_cursor_below_game ()
+{
+	tput cup $(($rows+1)) 0
 }
 
 # execute game loop, then sleep for REFRESH_TIME in a subshell and send SIGALRM to the current process
 # thanks to the trap below it will trigger the game loop again
 tick() {
-	clear
+	tput cup 0 0
 	handle_input "$key"
 	game
-	print_screen
-	( sleep $REFRESH_TIME; kill -s ALRM $$ )&
+	( sleep $REFRESH_TIME; kill -s ALRM $$ &> /dev/null )&
 }
 trap tick ALRM
 
@@ -306,6 +330,7 @@ parse_args "$@"
 snakebod_x=( $((cols/2)) )
 snakebod_y=( $((rows/2)) )
 clear_game_area_screen
+print_screen
 set_food
 # start game
 tick
