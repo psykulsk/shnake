@@ -1,4 +1,18 @@
-#/usr/bin/env bash
+#!/usr/bin/env bash
+
+
+# check if script is executed with bash, version >= 4.0
+if [[ -z $BASH_VERSION ]]; then
+		echo 'Execute this script with bash, version >= 4.0'
+		exit 1
+fi
+
+VERSION_ABOVE_OR_EQUAL_4_REGEX='^[^0-3]\..*\|^[0-9][0-9]\..*'
+echo $BASH_VERSION | grep $VERSION_ABOVE_OR_EQUAL_4_REGEX
+if [[ $? -ne 0 ]]; then
+	echo "Execute this script with bash, version >= 4.0. Your current version=$BASH_VERSION"
+	exit 1
+fi
 
 # remove highlighted terminal cursor
 tput civis
@@ -47,7 +61,7 @@ declare -r CORNER_ICON="+"
 parse_args ()
 {
 	local OPTIND opt
-	while getopts ":c:r:s:" opt; do
+	while getopts ":c:r:s:h" opt; do
 		case ${opt} in
 			c )
 			cols=$OPTARG
@@ -60,12 +74,11 @@ parse_args ()
 			;;
 			h )
 			usage
+			exit 0
 			;;
 			\? )
 			usage
-			;;
-			: )
-			usage
+			exit 1
 			;;
 		esac
 	done
@@ -110,6 +123,7 @@ set_speed ()
 		;;
 		*)
 		usage
+		exit 1
 		;;
 	esac
 	REFRESH_TIME=$X_TIME
@@ -117,12 +131,11 @@ set_speed ()
 
 usage ()
 {
-    echo "usage: $0 [-c cols ] [-h rows] [-s speed]"
+    echo "usage: $0 [-c cols ] [-r rows] [-s speed]"
     echo "  -h      display help"
     echo "  -c cols specify game area cols (best gameplay when < 30)"
     echo "  -r rows specify game area rows (best gameplay when < 30)"
     echo "  -s speed specify snake speed. Value from 1-8"
-    exit 1
 }
 
 clear_game_area_screen ()

@@ -3,7 +3,7 @@
 ```
 wget https://raw.githubusercontent.com/psykulsk/shnake/master/shnake.sh
 bash shnake.sh -h
-usage: shnake.sh [-c cols ] [-h rows] [-s speed]
+usage: shnake.sh [-c cols ] [-r rows] [-s speed]
   -h display help
   -c cols specify game area cols (best gameplay when < 30)
   -r rows specify game area rows (best gameplay when < 30)
