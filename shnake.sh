@@ -7,7 +7,7 @@ if [[ -z $BASH_VERSION ]]; then
 		exit 1
 fi
 
-VERSION_ABOVE_OR_EQUAL_4_REGEX='^[^0-3]\..*\|^[0-9][0-9]\..*'
+VERSION_ABOVE_OR_EQUAL_4_REGEX='^[^0-3]\..*\|^[0-9][0-9][0-9]*\..*'
 echo $BASH_VERSION | grep $VERSION_ABOVE_OR_EQUAL_4_REGEX
 if [[ $? -ne 0 ]]; then
 	echo "Execute this script with bash, version >= 4.0. Your current version=$BASH_VERSION"
