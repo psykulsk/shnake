@@ -12,5 +12,9 @@ usage: shnake.sh [-c cols ] [-r rows] [-s speed]
 
 Requires `bash --version` >= 4.0.
 
+### Other bash games
+* [tetri.sh](https://github.com/psykulsk/tetri.sh)
+
+### Demo
 ![](demo.gif)
 
