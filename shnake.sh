@@ -17,7 +17,9 @@ fi
 # remove highlighted terminal cursor
 tput civis
 # reset to normal on exit
-trap 'tput cnorm; echo Exitting $0' EXIT
+trap 'tput cnorm;' EXIT
+# reset to normal on exit and clean screen on SIGINT (Ctrl-C)
+trap 'tput cnorm; clear; exit;' SIGINT
 
 # declare default options
 declare -i cols=20
