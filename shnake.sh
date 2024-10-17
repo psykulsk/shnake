@@ -37,6 +37,9 @@ declare -a snakebod_x
 # array with snakebody y coordinates
 declare -a snakebod_y
 
+# score
+declare -i score=0
+
 # initial snake velocity
 declare -i vel_x=1
 declare -i vel_y=0
@@ -281,6 +284,7 @@ game ()
 		if [[ ${snakebod_y[i]} -eq $new_head_y ]] && [[ ${snakebod_x[i]} -eq $new_head_x ]]; then
 			set_cursor_below_game
 			echo Snake ate itself. You lose!
+   			echo Your score was: $score
 			exit 0
 		fi
 	done
@@ -292,6 +296,7 @@ game ()
 		draw_snake
 		check_win_cond
 		set_food
+          	((score++))
 	else
 		snakebod_x=($new_head_x ${snakebod_x[@]:0:${#snakebod_x[@]}-1})
 		snakebod_y=($new_head_y ${snakebod_y[@]:0:${#snakebod_y[@]}-1})
