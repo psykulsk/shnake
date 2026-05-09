@@ -22,6 +22,7 @@ Requires `bash --version` >= 4.0. **Warning**, MacOS is distributed with bash 3 
 
 ### Other bash games
 * [tetri.sh](https://github.com/psykulsk/tetri.sh)
+* [rubik.sh](https://github.com/psykulsk/rubik.sh)
 
 ### Demo
 ![](demo.gif)
