@@ -1,6 +1,6 @@
 # shnake
 
-Feeling your eyelids droop during that never-ending meeting? Or maybe you're on your server, bored out of your mind?
+Feeling your eyelids droop during that never-ending meeting? Or maybe you're ssh'ed into your server, bored out of your mind?
 
 Shnake is here for you!
 
